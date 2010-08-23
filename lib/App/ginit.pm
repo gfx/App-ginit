@@ -20,7 +20,7 @@ has verbose => (
 has try_lwp => (
     is      => 'ro',
     isa     => 'Bool',
-    default => 0,
+    default => 1,
 );
 
 has _git => (
@@ -43,14 +43,10 @@ sub run {
 }
 
 sub process_one {
-    my($self, $file) = @_;
+    my($self, $uri) = @_;
 
-    if(not -f $file) {
-        # TODO: get $arvhie with LWP
-        $self->diag_fail("File not found: $file");
-    }
-
-    my $dir = $self->unpack($file);
+    my $file = $self->fetch_module($uri);
+    my $dir  = $self->unpack( $self->fetch_module($file) );
     if(not defined $dir) {
         $self->diag_fail("No root directry found for $file");
     }
@@ -89,7 +85,46 @@ sub git {
     return system($self->_git, @args) == 0;
 }
 
-# copied from App::cpanminus::script::init_tools
+sub fetch_module { # based on cpanm's fetch_module()
+    my($self, $uri) = @_;
+
+    return $uri if -e $uri;
+
+    # Ugh, $dist->{filename} can contain sub directory
+    my $name = File::Basename::basename($uri);
+
+    my $cancelled;
+    my $fetch = sub {
+        my $file;
+        eval {
+            local $SIG{INT} = sub { $cancelled = 1; die "SIGINT\n" };
+            $self->mirror($uri, $name);
+            $file = $name if -e $name;
+        };
+        $self->chat("$@") if $@ && $@ ne "SIGINT\n";
+        return $file;
+    };
+
+    my($try, $file);
+    while ($try++ < 3) {
+        $file = $fetch->();
+        last if $cancelled or $file;
+        $self->diag_fail("Download $uri failed. Retrying ... ");
+    }
+
+    if ($cancelled) {
+        $self->diag_fail("Download cancelled.");
+    }
+
+    unless ($file) {
+        $self->diag_fail("Failed to download $uri");
+    }
+
+    return $file;
+}
+
+
+# The following stuff are just copied from App::cpanminus::script
 
 sub get      { $_[0]->{_backends}{get}->(@_) }
 sub mirror   { $_[0]->{_backends}{mirror}->(@_) }
@@ -123,7 +158,7 @@ sub BUILD {
             LWP::UserAgent->new(
                 parse_head => 0,
                 env_proxy => 1,
-                agent => "cpanminus/$VERSION",
+                agent => __PACKAGE__ . "/$VERSION",
                 timeout => 30,
                 @_,
             );
