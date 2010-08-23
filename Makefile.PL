@@ -1,13 +1,20 @@
 use inc::Module::Install;
-name 'App-ginit';
+use Module::Install::AuthorTests;
+use Module::Install::Repository;
+
 all_from 'lib/App/ginit.pm';
 
-# requires '';
-
-tests 't/*.t';
-author_tests 'xt';
+requires_external_bin 'git';
+requires_external_bin 'tar';
+requires_external_bin 'unzip';
 
 test_requires 'Test::More';
+
+tests_recursive;
+author_tests 'xt';
+
+install_script;
+
 auto_set_repository;
-auto_include;
-WriteAll;
+
+WriteAll(check_nmake => 0);

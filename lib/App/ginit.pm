@@ -1,6 +1,8 @@
 package App::ginit;
+use 5.008_001;
 use strict;
 use warnings;
+
 our $VERSION = '0.01';
 
 1;
@@ -12,7 +14,9 @@ App::ginit -
 
 =head1 SYNOPSIS
 
-  use App::ginit;
+  $ ginit http://example.com/app-1.0.0.tar.gz
+  # or
+  $ ginit app-1.0.0.tar.gz
 
 =head1 DESCRIPTION
 
@@ -23,6 +27,8 @@ App::ginit is
 Goro Fuji (gfx) E<lt>gfuji at cpan.orgE<gt>
 
 =head1 SEE ALSO
+
+L<git(1)>
 
 =head1 LICENSE
 
