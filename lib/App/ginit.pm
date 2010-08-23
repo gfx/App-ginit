@@ -404,7 +404,7 @@ __END__
 
 =head1 NAME
 
-App::ginit -
+App::ginit - Command line tool to get, unpack and git-import source code archives
 
 =head1 SYNOPSIS
 
@@ -414,7 +414,7 @@ App::ginit -
 
 =head1 DESCRIPTION
 
-App::ginit is
+App::ginit is ...
 
 =head1 AUTHOR
 
@@ -425,6 +425,8 @@ Goro Fuji (gfx) E<lt>gfuji at cpan.orgE<gt>
 L<git(1)>
 
 =head1 LICENSE
+
+Copyright (c) Fuji, Goro (gfx).
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
