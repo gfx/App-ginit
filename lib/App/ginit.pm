@@ -53,7 +53,7 @@ sub process_one {
     chdir $dir;
     $self->git('init')
         && $self->git(add => '.')
-        && $self->git(commit => '-m', "Initial import from $file")
+        && $self->git(commit => '-m', "Initial import from $uri")
         && $self->git(tag    => 'initial')
         && $self->git(tag    => $file) # alias
         && $self->diag("Looks good. Try `cd $dir`\n");
