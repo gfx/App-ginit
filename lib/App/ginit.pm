@@ -6,8 +6,33 @@ our $VERSION = '0.01';
 
 with 'MouseX::Getopt';
 
+has ua => (
+    is  => 'ro',
+    isa => 'Object',
+    traits => [qw(NoGetopt)],
+
+    lazy    => 1,
+    default => sub {
+        my($self) = @_;
+        return LWP::UserAgent->new(agent => ref($self) . "/" . $self->VERSION);
+    },
+);
+
 sub run {
-    
+    my($self) = @_;
+
+    foreach my $archive(@{$self->extra_argv}) {
+        $self->process_one($archive);
+    }
+}
+
+sub process_one {
+    my($self, $archive) = @_;
+
+    my $file;
+    if(not -f $archive) {
+        # TODO
+    }
 }
 
 no Mouse;

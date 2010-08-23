@@ -6,6 +6,7 @@ all_from 'lib/App/ginit.pm';
 
 requires 'Mouse';
 requires 'MouseX::Getopt';
+requires 'LWP';
 
 requires_external_bin 'git';
 requires_external_bin 'tar';
