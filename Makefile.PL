@@ -17,7 +17,7 @@ test_requires 'Test::More';
 tests_recursive;
 author_tests 'xt';
 
-install_script;
+install_script 'ginit';
 
 auto_set_repository;
 
