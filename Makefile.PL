@@ -4,6 +4,9 @@ use Module::Install::Repository;
 
 all_from 'lib/App/ginit.pm';
 
+requires 'Mouse';
+requires 'MouseX::Getopt';
+
 requires_external_bin 'git';
 requires_external_bin 'tar';
 requires_external_bin 'unzip';

@@ -1,11 +1,17 @@
 package App::ginit;
 use 5.008_001;
-use strict;
-use warnings;
+use Mouse;
 
 our $VERSION = '0.01';
 
-1;
+with 'MouseX::Getopt';
+
+sub run {
+    
+}
+
+no Mouse;
+__PACKAGE__->meta->make_immutable();
 __END__
 
 =head1 NAME

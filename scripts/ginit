@@ -1,0 +1,7 @@
+#!perl
+use strict;
+use App::ginit;
+
+my $app = App::ginit->new_with_options();
+$app->run();
+__END__
