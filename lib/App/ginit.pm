@@ -424,6 +424,10 @@ Goro Fuji (gfx) E<lt>gfuji at cpan.orgE<gt>
 
 L<git(1)>
 
+L<App::gh> - provides C<gh(1)> command
+
+L<Git::CPAN::Patch> - provides a number of git sub-commands related to CPAN and git
+
 =head1 LICENSE
 
 Copyright (c) Fuji, Goro (gfx).
